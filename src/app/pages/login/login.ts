@@ -8,7 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 
-import { Field, form, required, email, minLength } from '@angular/forms/signals';
+import { Field, form, required, email, minLength, submit } from '@angular/forms/signals';
 import { LoginInterface } from '../../interfaces/LoginInterface';
 import { MessageModule } from 'primeng/message';
 
@@ -43,8 +43,13 @@ export class Login {
     minLength(path.password, 8, { message: 'A senha deve ter pelo menos 8 caracteres.' });
   });
 
-  onSubmit() {
-    const formData = this.loginModel();
-    console.log(JSON.stringify(formData));
+  save(): void {
+    //se o form for invalid o callback n é chamado
+    submit(this.loginForm, async (form) => {
+      console.log(form().value());
+
+      //retorna que nenhum erro aconteceu
+      return null;
+    });
   }
 }
